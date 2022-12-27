@@ -1,0 +1,21 @@
+name: ANGULAR_DEPLOY_TEST
+region: fra
+static_sites:
+- build_command: |-
+    git init
+    git clean  -d  -f .
+    git remote add origin https://github.com/REPOSITORY
+    git fetch origin $BRANCH_NAME
+    git checkout $COMMIT_SHA
+    npm install
+    npm install -g @angular/cli
+    ng build --prod
+  environment_slug: node-js
+  github:
+    branch: main
+    deploy_on_push: true
+    repo: REPOSITORY
+  name: APP_NAME
+  error_document: index.html
+  routes:
+  - path: /
